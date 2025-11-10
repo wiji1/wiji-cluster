@@ -17,6 +17,10 @@ spec:
         - name: kubernetes-dashboard-kong-proxy
           port: 443
           serversTransport: dashboard-transport
+  tls:
+    certResolver: letsencrypt
+    domains:
+      - main: argo.wiji.dev
 ---
 apiVersion: traefik.io/v1alpha1
 kind: ServersTransport

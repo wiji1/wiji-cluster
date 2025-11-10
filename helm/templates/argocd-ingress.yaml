@@ -23,4 +23,8 @@ spec:
         - name: argocd-server
           port: 80
           scheme: h2c
+  tls:
+    certResolver: letsencrypt
+    domains:
+      - main: argo.wiji.dev        
 {{- end }}
