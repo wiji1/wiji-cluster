@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: internal-display-off
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: internal-display-off
+  template:
+    metadata:
+      labels:
+        app: internal-display-off
+    spec:
+      nodeSelector: 
+        internal-display: 'true'
+      hostPID: true
+      hostNetwork: true
+      tolerations:
+        - operator: Exists
+      containers:
+        - name: display-manager
+          image: alpine:latest
+          securityContext:
+            privileged: true
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/ash
+                  - -c
+                  - |
+                    echo "Restoring internal display on pod shutdown..."
+                    if [ -w /sys/class/graphics/fb0/blank ]; then
+                      echo 0 > /sys/class/graphics/fb0/blank
+                      echo "→ Internal display restored."
+                    fi
+          command:
+            - /bin/ash
+            - -c
+            - |
+              echo "Turning off internal display on $(hostname)..."
+              if [ -w /sys/class/graphics/fb0/blank ]; then
+                echo 2 > /sys/class/graphics/fb0/blank
+                echo "→ Internal display powered off."
+              else
+                echo "→ fb0 not writable, cannot blank display."
+              fi
+              sleep infinity
+          volumeMounts:
+            - name: sys
+              mountPath: /sys
+      volumes:
+        - name: sys
+          hostPath:
+            path: /sys
