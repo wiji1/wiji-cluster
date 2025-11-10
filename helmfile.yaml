@@ -186,9 +186,11 @@ releases:
     version: 27.28.0
     values:
       - server:
+          image:
+            tag: v2.51.2
           persistentVolume:
             enabled: true
-            size: 5Gi
+            size: 10Gi
           extraArgs:
             web.enable-remote-write-receiver: ""
         alertmanager:
