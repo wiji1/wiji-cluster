@@ -1,0 +1,15 @@
+global:
+  dashboardDomain: k8s.wiji.dev
+  argoCDDomain: argo.wiji.dev
+  grafanaDomain: grafana.wiji.dev
+
+infrastructure:
+  traefik:
+    rbacFix:
+      enabled: true
+  dashboard:
+    enabled: true
+  argocd:
+    enabled: true
+  monitoring:
+    enabled: true
