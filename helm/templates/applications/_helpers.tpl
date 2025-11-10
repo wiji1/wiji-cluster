@@ -1,7 +1,7 @@
 {{/*
 Generate image-list annotation value from images array
 */}}
-{{- define "timothyw-system.imageList" -}}
+{{- define "wiji-cluster.imageList" -}}
 {{- $list := list -}}
 {{- range . -}}
   {{- $list = append $list (printf "%s=%s" .alias .image) -}}
