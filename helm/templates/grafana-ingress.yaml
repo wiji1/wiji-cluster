@@ -16,8 +16,4 @@ spec:
       services:
         - name: grafana
           port: 80
-  tls:
-    certResolver: letsencrypt
-    domains:
-      - main: argo.wiji.dev
 {{- end }}
